@@ -2647,52 +2647,7 @@ class AdminBot:
         await self.dp.start_polling(self.bot)
 
 
-async def main():
-    db = Database()
-    parser = TriggerManager()
-    bot = Bot(token=BOT_TOKEN)
-
-    try:
-        chat = await bot.get_chat("@kabachcache_news")
-        db.init_default_subscription(str(chat.id), chat.title or "kabachcache_news", chat.username)
-        logger.info(f"Канал @kabachcache_news подключён: {chat.title}")
-    except Exception as e:
-        logger.error(f"Не удалось найти канал @kabachcache_news: {e}")
-
-    total = db.get_total_messages()
-    if total > CLEANUP_THRESHOLD:
-        deleted = db.delete_old_messages(days=CLEANUP_DAYS, limit=CLEANUP_LIMIT)
-        if deleted:
-            db.set_last_cleanup_date(datetime.now().isoformat())
-            logger.info(f"При старте удалено {deleted} старых сообщений (всего было {total})")
-        else:
-            logger.info(f"При старте старых сообщений не найдено (всего {total})")
-    else:
-        logger.info(f"При старте очистка не требуется: сообщений {total} (порог {CLEANUP_THRESHOLD})")
-
-    async def cleaner_loop():
-        while True:
-            try:
-                total = db.get_total_messages()
-                if total > CLEANUP_THRESHOLD:
-                    deleted = db.delete_old_messages(days=CLEANUP_DAYS, limit=CLEANUP_LIMIT)
-                    if deleted:
-                        db.set_last_cleanup_date(datetime.now().isoformat())
-                        logger.info(f"Удалено {deleted} старых сообщений (всего было {total})")
-                else:
-                    logger.debug(f"Очистка не требуется: всего сообщений {total} (порог {CLEANUP_THRESHOLD})")
-            except Exception as e:
-                logger.error(f"Ошибка очистки: {e}")
-            await asyncio.sleep(CLEANUP_INTERVAL)
-
-    collector = Collector(db, parser, bot)
-    admin_bot = AdminBot(db, collector, bot)
-
-    await asyncio.gather(
-        collector.start(),
-        admin_bot.run(),
-        cleaner_loop(),
-    )
+# ================== ЗАПУСК ==================
 
 from flask import Flask
 import threading
@@ -2760,6 +2715,7 @@ async def main():
         admin_bot.run(),
         cleaner_loop(),
     )
+
 
 if __name__ == "__main__":
     asyncio.run(main())
