@@ -34,7 +34,9 @@ from aiogram.exceptions import TelegramBadRequest
 API_ID = int(os.getenv("API_ID", "36615520"))
 API_HASH = os.getenv("API_HASH", "cc6f9eecf6a2549b8ae38d9b9c4a19af")
 PHONE_NUMBER = os.getenv("PHONE_NUMBER", "+79606694251")
-SESSION_NAME = "brawl_scout"
+SESSION_STRING_MAIN = os.getenv("SESSION_STRING_MAIN")
+SESSION_STRING_SECOND = os.getenv("SESSION_STRING_SECOND")
+
 BOT_TOKEN = os.getenv("BOT_TOKEN", "8635571798:AAFcjhLANHpLtfTzDZ00fMwk4-OJNI7ZGJM")
 
 # ===== АДМИНИСТРАТОРЫ =====
@@ -46,7 +48,7 @@ def is_admin(user_id: int) -> bool:
 BOT_START_TIME = "05.07.2026 12:00"
 
 SECOND_PHONE = "+79809456591"
-SECOND_SESSION = "brawl_scout_second"
+
 BLOCKED_CHAT = "@bschatpoisk"
 
 CHANNELS = [
