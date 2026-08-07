@@ -55,7 +55,7 @@ CHANNELS = [
     "@brawlpoisktima", "@brawlstarschat", "@Po1sk_Team", "@chat_poisk_bs",
     "@kabachcache_chat", "@bubspoiskcluba", "@poiskteambs",
 ]
-DB_NAME = "brawl.db"
+DB_NAME = "data/brawl.db"
 TIME_OFFSET = 3
 WELCOME_PHOTO_PATH = "assets/welcome.jpg"
 BROADCAST_DELAY = 0.05
